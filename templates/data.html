@@ -30,10 +30,10 @@
     .then(response => response.json())
     .then(data => {
         data.forEach(point => {
-            // 1 km (1000 metre) çapında bir daire oluştur
+            // 300 metre çapında bir daire oluştur
             var circle = L.circle([point.latitude, point.longitude], {
                 color: 'red',         // Çizgi rengi
-                fillColor: '#f03',    // Doldurma rengi
+                fillColor: '#f00',    // Doldurma rengi
                 fillOpacity: 0.5,     // Şeffaflık
                 radius: 150           // Yarıçap (metre cinsinden)
             }).addTo(map);
@@ -54,6 +54,26 @@
         });
     })
     .catch(error => console.error('Veri çekme hatası:', error));
+
+    fetch('/data2')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(point => {
+            // 4000 metre çapında bir daire oluştur
+            var circle = L.circle([point.latitude, point.longitude], {
+                color: 'blue',         // Çizgi rengi
+                fillColor: '#00f',    // Doldurma rengi
+                fillOpacity: 0.5,     // Şeffaflık
+                radius: 200           // Yarıçap (metre cinsinden)
+            }).addTo(map);
+
+            var timestamp = point.timestamp;
+
+            circle.bindPopup("<b>Sunucu:</b>" + point.servername + "<br><b>Tarih:</b> " + timestamp);
+        });
+    } )
+
+
     </script>
 </body>
 </html>
