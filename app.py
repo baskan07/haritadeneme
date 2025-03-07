@@ -16,6 +16,9 @@ cursor = db.cursor()
 @app.route('/sms', methods=['POST'])
 def receive_sms():
     try:
+
+        data = request.form.to_dict()
+        print(f"Received data: {json.dumps(data, indent=2)}")  # Loglama için
         # Twilio'dan gelen SMS içeriğini al
         sms_body = request.form['Body']  # "latitude=41.0082&longitude=28.9784&temperature=24.5&humidity=60"
 
