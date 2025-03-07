@@ -38,8 +38,19 @@
                 radius: 150           // Yarıçap (metre cinsinden)
             }).addTo(map);
 
-            // Popup ekleyerek sıcaklık ve nem bilgilerini göster
-            circle.bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%<br><b>Veri Alınma Zamanı:</b> " + point.timestamp);
+        // Verinin alındığı tarihi formatlama
+        var timestamp = point.timestamp;
+        var formattedDate = 'Geçersiz tarih';
+
+        // Timestamp'ı uygun formata dönüştürme (boşlukları 'T' ile değiştir ve milisaniyeyi kısalt)
+        if (timestamp) {
+            var formattedTimestamp = timestamp.replace(' ', 'T').split('.')[0];  // ' ' yerine 'T' koy, milisaniyeyi at
+            if (!isNaN(new Date(formattedTimestamp))) {
+                formattedDate = new Date(formattedTimestamp).toLocaleString(); // Yerel tarih saat formatı
+            } 
+        }
+        // Popup ekleyerek sıcaklık, nem ve zaman bilgilerini göster
+        circle.bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%<br><b>Veri Alınma Zamanı:</b> " + formattedDate);
         });
     })
     .catch(error => console.error('Veri çekme hatası:', error));
