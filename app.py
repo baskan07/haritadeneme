@@ -13,6 +13,20 @@ db = psycopg2.connect(
 )
 cursor = db.cursor()
 
+cursor.execute("DROP TABLE IF EXISTS sensor_readings;")
+
+cursor.execute("""CREATE TABLE IF NOT EXISTS sensor_readings (
+    id SERIAL PRIMARY KEY,
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL,
+    temperature DOUBLE PRECISION NOT NULL,
+    humidity DOUBLE PRECISION NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_location UNIQUE (latitude, longitude)
+);""")
+
+db.commit()  # Değişiklikleri kaydet
+
 @app.route('/sms', methods=['POST'])
 def receive_sms():
     try:
@@ -34,6 +48,11 @@ def receive_sms():
         cursor.execute("""
             INSERT INTO sensor_readings (latitude, longitude, temperature, humidity)
             VALUES (%s, %s, %s, %s)
+            ON CONFLICT (latitude, longitude) 
+            DO UPDATE SET 
+                temperature = EXCLUDED.temperature,
+                humidity = EXCLUDED.humidity,
+                timestamp = CURRENT_TIMESTAMP
         """, (latitude, longitude, temperature, humidity))
 
         db.commit()
