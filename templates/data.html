@@ -50,7 +50,7 @@
             } 
         }
         // Popup ekleyerek sıcaklık, nem ve zaman bilgilerini göster
-        circle.bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%<br><b>Veri Alınma Zamanı:</b> " + timestamp);
+        circle.bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%<br><b>Tarih:</b> " + timestamp);
         });
     })
     .catch(error => console.error('Veri çekme hatası:', error));
