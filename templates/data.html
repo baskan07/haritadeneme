@@ -35,7 +35,7 @@
                 data.forEach(point => {
                     var circle = L.circle([point.latitude, point.longitude], {
                         color: 'red', fillColor: '#f00', fillOpacity: 0.5, radius: 150
-                    }).bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%").addTo(dataLayer);
+                    }).bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%<br><b>Tarih:</b> " + point.timestamp).addTo(dataLayer);
                 });
             })
             .catch(error => console.error('Veri çekme hatası:', error));
@@ -49,7 +49,7 @@
                 data.forEach(point => {
                     var circle = L.circle([point.latitude, point.longitude], {
                         color: 'blue', fillColor: '#00f', fillOpacity: 0.5, radius: 2000
-                    }).bindPopup("<b>Sunucu:</b> " + point.servername).addTo(data2Layer);
+                    }).bindPopup("<b>Sunucu:</b> " + point.servername + "<br><b>Tarih:</b> " + point.timestamp).addTo(data2Layer);
                 });
             })
             .catch(error => console.error('Veri çekme hatası:', error));
