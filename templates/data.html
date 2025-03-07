@@ -71,7 +71,8 @@
 
             circle.bindPopup("<b>Sunucu:</b>" + point.servername + "<br><b>Tarih:</b> " + timestamp);
         });
-    } )
+    })
+    .catch(error => console.error('Veri çekme hatası:', error));
 
 
     </script>
