@@ -13,6 +13,10 @@ db = psycopg2.connect(
 )
 cursor = db.cursor()
 
+@app.route('/')
+def home():
+    return redirect("/harita", code=301)
+
 @app.route('/sms', methods=['POST'])
 def receive_sms():
     try:
