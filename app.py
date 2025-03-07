@@ -13,6 +13,32 @@ db = psycopg2.connect(
 )
 cursor = db.cursor()
 
+@app.route('/sms', methods=['POST'])
+def receive_sms():
+    try:
+        # Twilio'dan gelen SMS içeriğini al
+        sms_body = request.form['Body']  # "latitude=41.0082&longitude=28.9784&temperature=24.5&humidity=60"
+
+        # SMS içeriğini ayrıştır
+        data = dict(item.split("=") for item in sms_body.split("&"))
+        latitude = float(data.get("latitude", 0))
+        longitude = float(data.get("longitude", 0))
+        temperature = float(data.get("temperature", 0))
+        humidity = float(data.get("humidity", 0))
+
+        # Veriyi PostgreSQL'e kaydet
+        cursor.execute("""
+            INSERT INTO sensor_verileri (latitude, longitude, temperature, humidity)
+            VALUES (%s, %s, %s, %s)
+        """, (latitude, longitude, temperature, humidity))
+
+        conn.commit()
+        return "Veri başarıyla kaydedildi!", 200
+
+    except Exception as e:
+        return f"Hata: {str(e)}", 400
+
+
 @app.route('/veri', methods=['GET', 'POST'])
 def veri_ekle():
     if request.method == 'POST':
