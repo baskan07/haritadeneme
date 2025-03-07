@@ -76,6 +76,12 @@ def get_data():
     data = cursor.fetchall()
     return jsonify([{"latitude": row[0], "longitude": row[1], "temperature": row[2], "humidity": row[3], "timestamp": row[4]} for row in data])
 
+@app.route('/data2', methods=['GET'])
+def get_data():
+    cursor.execute("SELECT latitude, longitude, timestamp, servername FROM sunucu_okuma")
+    data = cursor.fetchall()
+    return jsonify([{"latitude": row[0], "longitude": row[1], "timestamp": row[2], "servername": row[3]} for row in data])
+
 @app.route("/harita", methods=["GET"])
 def olustur():
     return render_template("data.html")
