@@ -21,14 +21,10 @@ def receive_sms():
         sender = request.values.get('From', '')
 
         print(f"Message from {sender}: {incoming_msg}")  # Debug için
-
-        data = request.form.to_dict()
-        print(f"Received data: {json.dumps(data, indent=2)}")  # Loglama için
         # Twilio'dan gelen SMS içeriğini al
-        sms_body = request.form['Body']  # "latitude=41.0082&longitude=28.9784&temperature=24.5&humidity=60"
 
         # SMS içeriğini ayrıştır
-        data = dict(item.split("=") for item in sms_body.split("&"))
+        data = dict(item.split("=") for item in incoming_msg.split("&"))
         latitude = float(data.get("latitude", 0))
         longitude = float(data.get("longitude", 0))
         temperature = float(data.get("temperature", 0))
