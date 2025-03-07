@@ -17,6 +17,11 @@ cursor = db.cursor()
 def receive_sms():
     try:
 
+        incoming_msg = request.values.get('Body', '').lower()
+        sender = request.values.get('From', '')
+
+        print(f"Message from {sender}: {incoming_msg}")  # Debug için
+
         data = request.form.to_dict()
         print(f"Received data: {json.dumps(data, indent=2)}")  # Loglama için
         # Twilio'dan gelen SMS içeriğini al
