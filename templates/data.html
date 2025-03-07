@@ -37,12 +37,9 @@
                 fillOpacity: 0.5,     // Şeffaflık
                 radius: 150           // Yarıçap (metre cinsinden)
             }).addTo(map);
-            
-            var timestamp = new Date(point.timestamp);
-            var formattedDate = timestamp.toLocaleString(); // Yerel tarih saat formatı
 
             // Popup ekleyerek sıcaklık ve nem bilgilerini göster
-            circle.bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%<br><b>Veri Alınma Zamanı:</b> " + formattedDate);
+            circle.bindPopup("<b>Sıcaklık:</b> " + point.temperature + "°C<br><b>Nem:</b> " + point.humidity + "%<br><b>Veri Alınma Zamanı:</b> " + point.timestamp);
         });
     })
     .catch(error => console.error('Veri çekme hatası:', error));
