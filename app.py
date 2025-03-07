@@ -32,7 +32,7 @@ def receive_sms():
             VALUES (%s, %s, %s, %s)
         """, (latitude, longitude, temperature, humidity))
 
-        conn.commit()
+        db.commit()
         return "Veri başarıyla kaydedildi!", 200
 
     except Exception as e:
