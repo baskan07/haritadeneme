@@ -32,7 +32,7 @@ def receive_sms():
 
         # Veriyi PostgreSQL'e kaydet
         cursor.execute("""
-            INSERT INTO sensor_readings (latitude, longitude, temperature, humidity)
+            INSERT INTO sensor_okuma (latitude, longitude, temperature, humidity)
             VALUES (%s, %s, %s, %s)
             ON CONFLICT (latitude, longitude) 
             DO UPDATE SET 
@@ -58,7 +58,7 @@ def veri_ekle():
             humidity = float(request.form['humidity'])
 
             # Veriyi veritabanına ekle
-            query = "INSERT INTO sensor_readings (latitude, longitude, temperature, humidity) VALUES (%s, %s, %s, %s)"
+            query = "INSERT INTO sensor_okuma (latitude, longitude, temperature, humidity) VALUES (%s, %s, %s, %s)"
             cursor.execute(query, (latitude, longitude, temperature, humidity))
             db.commit()
 
@@ -72,7 +72,7 @@ def veri_ekle():
 
 @app.route('/data', methods=['GET'])
 def get_data():
-    cursor.execute("SELECT latitude, longitude, temperature, humidity FROM sensor_readings")
+    cursor.execute("SELECT latitude, longitude, temperature, humidity FROM sensor_okuma")
     data = cursor.fetchall()
     return jsonify([{"latitude": row[0], "longitude": row[1], "temperature": row[2], "humidity": row[3]} for row in data])
 
