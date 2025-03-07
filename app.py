@@ -72,9 +72,9 @@ def veri_ekle():
 
 @app.route('/data', methods=['GET'])
 def get_data():
-    cursor.execute("SELECT latitude, longitude, temperature, humidity FROM sensor_okuma")
+    cursor.execute("SELECT latitude, longitude, temperature, humidity, timestamp FROM sensor_okuma")
     data = cursor.fetchall()
-    return jsonify([{"latitude": row[0], "longitude": row[1], "temperature": row[2], "humidity": row[3]} for row in data])
+    return jsonify([{"latitude": row[0], "longitude": row[1], "temperature": row[2], "humidity": row[3], "timestamp": row[4]} for row in data])
 
 @app.route("/harita", methods=["GET"])
 def olustur():
